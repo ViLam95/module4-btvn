@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+</head>
+<body>
+<h1>Update Student</h1>
+<p>
+    <a href="/students">Student list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/edit-student}" th:object="${student}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td><input type="text" th:field="*{age}"/></td>
+        </tr>
+        <tr>
+            <td>Point:</td>
+            <td><input type="text" th:field="*{point}"/></td>
+        </tr>
+        <tr>
+            <td>Class:</td>
+            <td>
+                <select name="classes">
+                    <option th:each="c : ${classes}"
+                            th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:selected="(${student.classes}) and (${c.id} == *{classes.id})"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update Student"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

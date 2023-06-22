@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Classes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center">List Classes</h1>
+    <div style="margin-bottom: 10px; margin-left: 130px">
+        <a class="btn btn-secondary" th:href="@{/students}">
+            Back to student</a>
+        <a class="btn btn-primary" th:href="@{/create-classes}">
+            Add new classes</a>
+        <a class="btn btn-info" th:href="@{/sort_asc}">
+            Sort asc by number student</a>
+        <a class="btn btn-info" th:href="@{/sort_desc}">
+            Sort desc by number student</a>
+    </div>
+<table class="table table-success table-striped" style="text-align: center">
+    <tr>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+        <th>Quantity</th>
+    </tr>
+    <th:block th:each="class : ${classes}">
+        <tr>
+            <td th:text="${class.name}"></td>
+            <td>
+            <button type="button" class="btn btn-info">
+                <a th:href="@{/edit-classes/__${class.id}__ }">Edit</a>
+            </button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-danger">
+                <a th:href="@{/delete-classes/__${class.id}__ }">Delete</a>
+            </button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-danger">
+                <a th:href="@{/view-classes/__${class.id}__ }">View</a>
+            </button>
+            </td>
+            <td th:text="${class.quantity}"></td>
+        </tr>
+    </th:block>
+</table>
+</div>
+</body>
+</html>
