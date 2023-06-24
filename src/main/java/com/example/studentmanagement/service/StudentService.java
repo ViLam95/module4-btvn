@@ -4,6 +4,8 @@ import com.example.studentmanagement.model.Classes;
 import com.example.studentmanagement.model.Student;
 import com.example.studentmanagement.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,9 +34,10 @@ public class StudentService implements IStudentService{
         studentRepository.deleteById(id);
     }
 
+
     @Override
-    public List<Student> searchByName(String name) {
-        return studentRepository.searchByName(name);
+    public Page<Student> searchByName(String name, Pageable pageable) {
+        return studentRepository.searchByName( "%" + name + "%", pageable);
     }
 
     @Override
@@ -60,6 +63,11 @@ public class StudentService implements IStudentService{
     @Override
     public List<Student> findAllByOrderByAgeDesc() {
         return studentRepository.findAllByOrderByAgeDesc();
+    }
+
+    @Override
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
 

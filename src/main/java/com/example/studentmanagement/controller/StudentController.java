@@ -5,6 +5,9 @@ import com.example.studentmanagement.model.Student;
 import com.example.studentmanagement.service.IClassesService;
 import com.example.studentmanagement.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("students")
 public class StudentController {
     @Autowired
     private IStudentService studentService;
@@ -48,11 +52,10 @@ public class StudentController {
             return modelAndView;
         }
     }
-    @GetMapping("/students")
-    public ModelAndView listStudent() {
-        Iterable<Student> students = studentService.findAll();
+    @GetMapping
+    public ModelAndView listStudent(@PageableDefault(value = 3) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("/student/list");
-        modelAndView.addObject("students", students);
+        modelAndView.addObject("students", studentService.findAll(pageable));
         return modelAndView;
     }
     @GetMapping("/edit-student/{id}")
@@ -86,11 +89,19 @@ public class StudentController {
         }
         return "redirect:/students";
     }
-    @PostMapping("/students/search")
-    public ModelAndView searchStudents(@RequestParam("name") String name) {
-        List<Student> students = studentService.searchByName(name);
+    @PostMapping("/search")
+    public ModelAndView searchStudents(@RequestParam String nameSearch, @PageableDefault(value = 3) Pageable pageable) {
+        Page<Student> students = studentService.searchByName(nameSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("/student/list");
         modelAndView.addObject("students",students);
+        modelAndView.addObject("name", nameSearch);
+        return modelAndView;
+    }
+    @GetMapping("/search/{name}")
+    public ModelAndView nextSearch(@PathVariable String name, @PageableDefault(value = 3) Pageable pageable) {
+        Page<Student> students = studentService.searchByName(name, pageable);
+        ModelAndView modelAndView = new ModelAndView("/student/list");
+        modelAndView.addObject("students", students);
         return modelAndView;
     }
 
