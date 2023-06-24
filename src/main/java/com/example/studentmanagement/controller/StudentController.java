@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("students")
 public class StudentController {
     @Autowired
     private IStudentService studentService;
@@ -52,12 +51,6 @@ public class StudentController {
             return modelAndView;
         }
     }
-    @GetMapping
-    public ModelAndView listStudent(@PageableDefault(value = 3) Pageable pageable) {
-        ModelAndView modelAndView = new ModelAndView("/student/list");
-        modelAndView.addObject("students", studentService.findAll(pageable));
-        return modelAndView;
-    }
     @GetMapping("/edit-student/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
         Optional<Student> student = studentService.findById(id);
@@ -89,7 +82,13 @@ public class StudentController {
         }
         return "redirect:/students";
     }
-    @PostMapping("/search")
+    @GetMapping("students")
+    public ModelAndView listStudent(@PageableDefault(value = 3) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("/student/list");
+        modelAndView.addObject("students", studentService.findAll(pageable));
+        return modelAndView;
+    }
+    @PostMapping("/students/search")
     public ModelAndView searchStudents(@RequestParam String nameSearch, @PageableDefault(value = 3) Pageable pageable) {
         Page<Student> students = studentService.searchByName(nameSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("/student/list");
@@ -97,7 +96,7 @@ public class StudentController {
         modelAndView.addObject("name", nameSearch);
         return modelAndView;
     }
-    @GetMapping("/search/{name}")
+    @GetMapping("/students/search/{name}")
     public ModelAndView nextSearch(@PathVariable String name, @PageableDefault(value = 3) Pageable pageable) {
         Page<Student> students = studentService.searchByName(name, pageable);
         ModelAndView modelAndView = new ModelAndView("/student/list");

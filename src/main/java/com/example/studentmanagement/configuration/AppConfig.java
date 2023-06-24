@@ -19,8 +19,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -29,6 +31,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -107,5 +110,19 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new ClassesFormatter(applicationContext.getBean(ClassesService.class)));
+    }
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(simpleMappingExceptionResolver());
+    }
+
+    private HandlerExceptionResolver simpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+
+        Properties exceptionMappings = new Properties();
+        exceptionMappings.setProperty("java.lang.Exception", "error"); // Thay "error" bằng đường dẫn tới trang lỗi
+        exceptionResolver.setExceptionMappings(exceptionMappings);
+
+        return exceptionResolver;
     }
 }
