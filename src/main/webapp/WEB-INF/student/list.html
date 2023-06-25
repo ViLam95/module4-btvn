@@ -24,6 +24,15 @@
             Student List </a>
         <a class="btn btn-info" th:href="@{/classes}">
             Classes List</a>
+        <a class="btn btn-info" th:href="@{/students/gender/Male}">
+            Filter by Male</a>
+        <a class="btn btn-info" th:href="@{/students/gender/Female}">
+            Filter by Female</a>
+        <form method="get" th:action="@{/students/age-range}">
+            <input type="number" name="minAge" placeholder="Minimum Age" required>
+            <input type="number" name="maxAge" placeholder="Maximum Age" required>
+            <button type="submit" class="btn btn-info">Filter by Age</button>
+        </form>
     </div>
 <form method="post" th:action="@{/students/search}">
     <input type="text" name="nameSearch">
@@ -33,6 +42,7 @@
     <tr>
         <th>Name</th>
         <th>Age</th>
+        <th>Gender</th>
         <th>Point</th>
         <th>Class</th>
         <th>Edit</th>
@@ -42,6 +52,7 @@
         <tr>
             <td th:text="${student.name}"></td>
             <td th:text="${student.age}"></td>
+            <td th:text="${student.gender}"></td>
             <td th:text="${student.point}"></td>
             <td th:if="${student.classes}" th:text="${student.classes.name}"></td>
             <td th:unless="${student.classes}"></td>

@@ -132,5 +132,20 @@ public class StudentController {
         modelAndView.addObject("students", students);
         return modelAndView;
     }
+    @GetMapping("/students/gender/{gender}")
+    public ModelAndView getStudentsByGender(@PathVariable String gender) {
+        List<Student> students = studentService.getStudentsByGender(gender);
+        ModelAndView modelAndView = new ModelAndView("/student/list");
+        modelAndView.addObject("students", students);
+        return modelAndView;
+    }
+    @GetMapping("/students/age-range")
+    public ModelAndView getStudentsByAgeRange(@RequestParam("minAge") int minAge, @RequestParam("maxAge") int maxAge) {
+        List<Student> students = studentService.findByAgeBetween(minAge, maxAge);
+        ModelAndView modelAndView = new ModelAndView("/student/list");
+        modelAndView.addObject("students", students);
+        return modelAndView;
+    }
+
 }
 

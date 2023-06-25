@@ -111,18 +111,5 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new ClassesFormatter(applicationContext.getBean(ClassesService.class)));
     }
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add(simpleMappingExceptionResolver());
-    }
 
-    private HandlerExceptionResolver simpleMappingExceptionResolver() {
-        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-
-        Properties exceptionMappings = new Properties();
-        exceptionMappings.setProperty("java.lang.Exception", "error"); // Thay "error" bằng đường dẫn tới trang lỗi
-        exceptionResolver.setExceptionMappings(exceptionMappings);
-
-        return exceptionResolver;
-    }
 }

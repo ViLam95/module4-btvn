@@ -15,6 +15,7 @@ public class Student {
     private String name;
     private int age;
     private double point;
+    private String gender;
     @ManyToOne
     @JoinColumn(name = "classes_id")
     private Classes classes;
@@ -22,10 +23,11 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, int age, double point, Classes classes) {
+    public Student(String name, int age, double point, String gender, Classes classes) {
         this.name = name;
         this.age = age;
         this.point = point;
+        this.gender = gender;
         this.classes = classes;
     }
 
@@ -53,6 +55,14 @@ public class Student {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public double getPoint() {
         return point;
     }
@@ -64,6 +74,7 @@ public class Student {
     public Classes getClasses() {
         return classes;
     }
+
 
     public void setClasses(Classes classes) {
         this.classes = classes;

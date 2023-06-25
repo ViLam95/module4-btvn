@@ -15,10 +15,15 @@
         <input type="text" id="name" th:field="*{name}" ><br><br>
     <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
     <label for="age">Age:</label>
-        <input type="number" id="age" th:field="*{age}" required><br><br>
+        <input type="number" id="age" th:field="*{age}"><br><br>
 
     <label for="point">Point:</label>
-        <input type="number" step="0.01" id="point" th:field="*{point}" required><br><br>
+        <input type="number" step="0.01" id="point" th:field="*{point}"><br><br>
+    <label>Gender:</label><br>
+        <input type="checkbox" id="male" name="gender" value="Male" th:checked="${student.gender == 'Male'}">
+    <label for="male">Male</label><br>
+        <input type="checkbox" id="female" name="gender" value="Female" th:checked="${student.gender == 'Female'}">
+    <label for="female">Female</label><br><br>
 
     <tr>
         <td>Class:</td>

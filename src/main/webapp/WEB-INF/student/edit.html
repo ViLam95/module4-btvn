@@ -28,6 +28,14 @@
             <td><input type="text" th:field="*{point}"/></td>
         </tr>
         <tr>
+            <td>Gender:</td>
+            <td><input type="checkbox" id="male" name="gender" value="Male" th:checked="${student.gender == 'Male'}">
+                <label for="male">Male</label><br>
+                <input type="checkbox" id="female" name="gender" value="Female" th:checked="${student.gender == 'Female'}">
+                <label for="female">Female</label><br><br>
+            </td>
+        </tr>
+        <tr>
             <td>Class:</td>
             <td>
                 <select name="classes">

@@ -17,5 +17,7 @@ public interface IStudentService extends IGeneralService<Student> {
     List<Student> findAllByOrderByAgeAsc();
     List<Student> findAllByOrderByAgeDesc();
     Page<Student> findAll(Pageable pageable);
+    List<Student> getStudentsByGender(String gender);
+    List<Student> findByAgeBetween(int minAge, int maxAge);
 
 }

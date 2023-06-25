@@ -21,4 +21,6 @@ public interface IStudentRepository extends PagingAndSortingRepository<Student, 
     List<Student> findAllByOrderByAgeAsc();
     List<Student> findAllByOrderByAgeDesc();
     Page<Student> findAll(Pageable pageable);
+    List<Student> findByGender(String gender);
+    List<Student> findByAgeBetween(int minAge, int maxAge);
 }

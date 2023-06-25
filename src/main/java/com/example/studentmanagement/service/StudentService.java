@@ -70,5 +70,15 @@ public class StudentService implements IStudentService{
         return studentRepository.findAll(pageable);
     }
 
+    @Override
+    public List<Student> getStudentsByGender(String gender) {
+        return studentRepository.findByGender(gender);
+    }
+
+    @Override
+    public List<Student> findByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge,maxAge);
+    }
+
 
 }
